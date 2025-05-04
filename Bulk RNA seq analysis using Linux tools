@@ -1,0 +1,27 @@
+1) FastQC
+fastqc    /Users/zaibahasankhan/Documents/R1_10.fastq    /Users/zaibahasankhan/Documents/R2_10.fastq -o /Users/zaibahasankhan/Documents  
+
+
+or 
+
+1) fastp 
+
+fastp -i /Users/zaibahasankhan/Documents/R1_10.fastq -I /Users/zaibahasankhan/Documents/R2_10.fastq -o /Users/zaibahasankhan/Documents/sample_trimmed_R1.fastq.gz -O /Users/zaibahasankhan/Documents/sample_trimmed_R2.fastq.gz --detect_adapter_for_pe  
+
+2) Trimmomatic 
+
+java -jar trimmomatic-0.39.jar PE /Users/zaibahasankhan/Documents/R1_10.fastq /Users/zaibahasankhan/Documents/R2_10.fastq 
+/Users/zaibahasankhan/Documents/output_forward_paired.fq.gz /Users/zaibahasankhan/Documents/output_forward_unpaired.fq.gz 
+/Users/zaibahasankhan/Documents/output_reverse_paired.fq.gz /Users/zaibahasankhan/Documents/output_reverse_unpaired.fq.gz 
+ILLUMINACLIP:/Users/zaibahasankhan/Documents/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10:2:True LEADING:3 TRAILING:3 MINLEN:65 
+
+3) Hisat2  (
+hisat2 -p 8 -x /Users/zaibahasankhan/Documents/grch38_2/genome  -1 /Users/zaibahasankhan/Documents/R1_10.fastq -2 /Users/zaibahasankhan/Documents/R2_10.fastq | samtools sort -@ 8 -o /Users/zaibahasankhan/Documents/aligned_new.bam  
+
+
+4) Subread  
+#bin (cd bin)  
+featureCounts -T 8 -s 2 -p -a /Users/zaibahasankhan/Documents/Homo_sapiens_gtf  -o /Users/zaibahasankhan/Documents/human_counts.txt  /Users/zaibahasankhan/Documents/aligned_new.bam  
+
+
+cat /Users/zaibahasankhan/Documents/human_counts.txt| cut -f1,7| less 
