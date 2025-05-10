@@ -1,1 +1,1 @@
-In this repo I have kept script for ngs data analysis 
+Script for various ngs data analysis 
